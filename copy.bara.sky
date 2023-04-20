@@ -8,19 +8,19 @@ core.workflow(
         ref = "main",
     ),
     destination = git.github_pr_destination(
-         url = destinationUrl,
+        url = destinationUrl,
         destination_ref = "main",
         pr_branch = "from_monolith",
         title = "pr from monolith",
-        body = "this is a sample pull request from" + COPYBARA_CURRENT_REV_DATE_TIME,
+        body = "this is a sample pull request",
         integrates = [],
     ),
     origin_files = glob(["**/configs/mz/**"]) + (glob(["src/models/**"]) - glob(["src/models/configs/**"])),
     destination_files = glob(["modelzoo/**"]),
     authoring = authoring.pass_thru("Ankit Jain <ankit.jain@cerebras.net>"),
     transformations = [
-        core.move("src/models/transformers/configs", "modelzoo/transformers/configs", paths=glob(["configs/mz/**"]) ),
-        core.move("src/models/configs", "modelzoo/configs", paths=glob(["configs/mz/**"]) ),
+        core.move("src/models/transformers/configs/mz", "modelzoo/transformers/configs" ),
+        core.move("src/models/configs/mz", "modelzoo/configs"),
         core.move("src/models", "modelzoo"),
         core.replace(
         before = "${x}",
@@ -29,6 +29,6 @@ core.workflow(
         regex_groups = {
             "x": "(?m)^.*BEGIN_CEREBRAS_ONLY[\\w\\W]*?END_CEREBRAS_ONLY.*$\\n",
         },
-    )
+        )
     ],
 )
