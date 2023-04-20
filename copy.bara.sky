@@ -7,16 +7,20 @@ core.workflow(
         url = sourceUrl,
         ref = "main",
     ),
-    destination = git.destination(
-        url = destinationUrl,
-        fetch = "main",
-        push = "main",
+    destination = git.github_pr_destination(
+         url = destinationUrl,
+        destination_ref = "main",
+        pr_branch = "from_monolith",
+        title = "pr from monolith",
+        body = "this is a sample pull request",
+        integrates = [],
     ),
-    origin_files = (glob(["**/configs/mz/**"]) + glob(["README.md"])) + (glob(["src/models/**"]) - glob(["src/models/configs/**"])),
+    origin_files = glob(["**/configs/mz/**"]) + (glob(["src/models/**"]) - glob(["src/models/configs/**"])),
+    destination_files = glob(["modelzoo/**"]),
     authoring = authoring.pass_thru("Ankit Jain <ankit.jain@cerebras.net>"),
     transformations = [
-        core.move("src/models/transformers", "modelzoo", paths=glob(["configs/mz/**"]) ),
-        core.move("src/models/", "modelzoo", paths=glob(["configs/mz/**"]) )
+        core.move("src/models/transformers/configs", "modelzoo/transformers/configs", paths=glob(["configs/mz/**"]) ),
+        core.move("src/models/configs", "modelzoo/configs", paths=glob(["configs/mz/**"]) ),
         core.move("src/models", "modelzoo"),
         core.replace(
         before = "${x}",
