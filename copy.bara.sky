@@ -12,7 +12,7 @@ core.workflow(
         destination_ref = "main",
         pr_branch = "from_monolith",
         title = "pr from monolith",
-        body = "this is a sample pull request",
+        body = "this is a sample pull request from $(COPYBARA_CURRENT_REV_DATE_TIME)",
         integrates = [],
     ),
     origin_files = glob(["**/configs/mz/**"]) + (glob(["src/models/**"]) - glob(["src/models/configs/**"])),
