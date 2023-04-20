@@ -12,6 +12,9 @@ core.workflow(
         fetch = "main",
         push = "main",
     ),
-    destination_files = glob(["**"]),
+    origin_files = (glob(["src/models/configs/mz/**"]) + glob(["README.md"])) + (glob(["src/models/**]) - glob(["src/models/configs"]),
     authoring = authoring.pass_thru("Ankit Jain <ankit.jain@cerebras.net>"),
+    transformations = [
+        core.move("src/models", "modelzoo"),
+    ],
 )
