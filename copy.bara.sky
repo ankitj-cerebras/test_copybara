@@ -1,0 +1,17 @@
+sourceUrl = "git@github.com:ankitj-cerebras/test_copybara.git"
+destinationUrl = "git@github.com:ankitj-cerebras/test_copybara2.git"
+
+core.workflow(
+    name = "default",
+    origin = git.origin(
+        url = sourceUrl,
+        ref = "main",
+    ),
+    destination = git.destination(
+        url = destinationUrl,
+        fetch = "main",
+        push = "main",
+    ),
+    destination_files = glob(["**"]),
+    authoring = authoring.pass_thru("Ankit Jain <ankit.jain@cerebras.net>"),
+)
