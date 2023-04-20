@@ -15,7 +15,8 @@ core.workflow(
     origin_files = (glob(["**/configs/mz/**"]) + glob(["README.md"])) + (glob(["src/models/**"]) - glob(["src/models/configs/**"])),
     authoring = authoring.pass_thru("Ankit Jain <ankit.jain@cerebras.net>"),
     transformations = [
-        core.move("src/models/", "modelzoo/configs", paths=glob(["configs/mz/**"]) ),
+        core.move("src/models/transformers", "modelzoo", paths=glob(["configs/mz/**"]) ),
+        core.move("src/models/", "modelzoo", paths=glob(["configs/mz/**"]) )
         core.move("src/models", "modelzoo"),
         core.replace(
         before = "${x}",
