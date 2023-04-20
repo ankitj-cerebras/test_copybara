@@ -12,9 +12,18 @@ core.workflow(
         fetch = "main",
         push = "main",
     ),
-    origin_files = (glob(["src/models/configs/mz/**"]) + glob(["README.md"])) + (glob(["src/models/**]) - glob(["src/models/configs"]),
+    origin_files = (glob(["src/models/configs/mz/**"]) + glob(["README.md"])) + (glob(["src/models/**"]) - glob(["src/models/configs/**"])),
     authoring = authoring.pass_thru("Ankit Jain <ankit.jain@cerebras.net>"),
     transformations = [
+        core.move("src/models/configs/mz", "modelzoo/configs"),
         core.move("src/models", "modelzoo"),
+        core.replace(
+        before = "${x}",
+        after = "",
+        multiline = True,
+        regex_groups = {
+            "x": "(?m)^.*BEGIN_CEREBRAS_ONLY[\\w\\W]*?END_CEREBRAS_ONLY.*$\\n",
+        },
+    )
     ],
 )
