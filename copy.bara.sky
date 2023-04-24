@@ -23,6 +23,10 @@ core.workflow(
         core.move("src/models/configs/mz", "modelzoo/configs"),
         core.move("src/models", "modelzoo"),
         core.replace(
+        before = "# MZ:"
+        after = "",
+        ),
+        core.replace(
         before = "${x}",
         after = "",
         multiline = True,

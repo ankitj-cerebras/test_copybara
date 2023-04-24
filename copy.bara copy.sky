@@ -1,0 +1,53 @@
+sourceUrl = "git@github.com:Cerebras/monolith.git"
+destinationUrl = "git@github.com:Cerebras/modelzoo-internal.git"
+
+core.workflow(
+    name = "default",
+    origin = git.origin(
+        url = sourceUrl,
+        ref = "main",
+    ),
+    destination = git.github_pr_destination(
+        url = destinationUrl,
+        destination_ref = "main",
+        pr_branch = "Update Modelzoo with Monolith",
+        title = "pr from monolith",
+        body = "This is a PR to update modelzoo internal from monolith",
+        integrates = [],
+    ),
+    origin_files = glob(["**/configs/mz/**"]) + (glob(["src/models/**"]) - glob(["src/models/configs/**"])),
+    destination_files = glob(["modelzoo/**"]),
+    authoring = authoring.pass_thru("Ankit Jain <ankit.jain@cerebras.net>"),
+    transformations = [
+        core.move("src/models/transformers/pytorch/bert/configs/mz", "modelzoo/transformers/pytorch/bert/configs"),
+        core.move("src/models/transformers/pytorch/gpt2/configs/mz", "modelzoo/transformers/pytorch/gpt2/configs"),
+        core.move("src/models/transformers/pytorch/gpt3/configs/mz", "modelzoo/transformers/pytorch/gpt3/configs"),
+        core.move("src/models/transformers/pytorch/gptj/configs/mz", "modelzoo/transformers/pytorch/gptj/configs"),
+        core.move("src/models/transformers/pytorch/layers_api_demo/configs/mz", "modelzoo/transformers/pytorch/layers_api_demo/configs"),
+        core.move("src/models/transformers/pytorch/t5/configs/mz", "modelzoo/transformers/pytorch/t5/configs"),
+        core.move("src/models/transformers/pytorch/transformer/configs/mz", "modelzoo/transformers/pytorch/transformer/configs"),
+        core.move("src/models/transformers/tf/bert/configs/mz", "modelzoo/transformers/tf/bert/configs"),
+        core.move("src/models/transformers/tf/gpt2/configs/mz", "modelzoo/transformers/tf/gpt2/configs"),
+        core.move("src/models/transformers/tf/gpt3/configs/mz", "modelzoo/transformers/tf/gpt3/configs"),
+        core.move("src/models/transformers/tf/gptj/configs/mz", "modelzoo/transformers/tf/gptj/configs"),
+        core.move("src/models/transformers/tf/layers/configs/mz", "modelzoo/transformers/tf/layers/configs"),
+        core.move("src/models/transformers/tf/t5/configs/mz", "modelzoo/transformers/tf/t5/configs"),
+        core.move("src/models/transformers/tf/transformer/configs/mz", "modelzoo/transformers/tf/transformer/configs"),
+        core.move("src/models/transformers/tf/linformer/configs/mz", "modelzoo/transformers/tf/linformer/configs"),
+        core.move("src/models/vision/pytorch/unet/configs/mz", "modelzoo/vision/pytorch/unet/configs" ),
+        core.move("src/models/vision/pytorch/resnet/configs/mz", "modelzoo/vision/pytorch/resnet/configs" ),
+        core.move("src/models", "modelzoo"),
+        core.replace(
+        before = "MZ :"
+        after = "",
+        ),
+        core.replace(
+        before = "${x}",
+        after = "",
+        multiline = True,
+        regex_groups = {
+            "x": "(?m)^.*BEGIN_CEREBRAS_ONLY[\\w\\W]*?END_CEREBRAS_ONLY.*$\\n",
+        },
+        )
+    ],
+)
