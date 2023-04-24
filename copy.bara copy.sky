@@ -37,10 +37,7 @@ core.workflow(
         core.move("src/models/vision/pytorch/unet/configs/mz", "modelzoo/vision/pytorch/unet/configs" ),
         core.move("src/models/vision/pytorch/resnet/configs/mz", "modelzoo/vision/pytorch/resnet/configs" ),
         core.move("src/models", "modelzoo"),
-        core.replace(
-        before = "MZ :",
-        after = "",
-        ),
+        core.replace(before = "# MZ: ", after = ""),
         core.replace(
         before = "${x}",
         after = "",
