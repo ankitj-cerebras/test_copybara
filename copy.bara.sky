@@ -11,7 +11,7 @@ core.workflow(
         url = destinationUrl,
         destination_ref = "main",
         pr_branch = "from_monolith",
-        title = "pr from monolith",
+        title = "pr from monolith ${CONTEXT_REFERENCE}",
         body = "this is a sample pull request",
         integrates = [],
     ),

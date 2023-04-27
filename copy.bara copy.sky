@@ -15,7 +15,7 @@ core.workflow(
         body = "This is a PR to update modelzoo internal from monolith",
         integrates = [],
     ),
-    origin_files = glob(["**/configs/mz/**"]) + (glob(["src/models/**"]) - glob(["src/models/configs/**"])),
+    origin_files = glob(["**/configs/mz/**"]) + (glob(["src/models/**"]) - glob(["**/configs/**"]) - glob(["src/models/templates/**"]) - glob(["src/models/pfc/**"]) - glob(["src/models/experimental_api/**"]) - glob(["src/models/vision/tf/**"]) - glob(["src/models/vision/__init__.py"]) - glob(["src/models/vision/test_categories.txt"])),
     destination_files = glob(["modelzoo/**"]),
     authoring = authoring.pass_thru("Ankit Jain <ankit.jain@cerebras.net>"),
     transformations = [
@@ -38,6 +38,7 @@ core.workflow(
         core.move("src/models/vision/pytorch/resnet/configs/mz", "modelzoo/vision/pytorch/resnet/configs" ),
         core.move("src/models", "modelzoo"),
         core.replace(before = "# MZ: ", after = ""),
+        core.replace(before = "# MZ:", after = ""),
         core.replace(
         before = "${x}",
         after = "",
