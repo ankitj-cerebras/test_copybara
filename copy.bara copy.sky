@@ -1,5 +1,5 @@
-sourceUrl = "git@github.com:Cerebras/monolith.git"
-destinationUrl = "git@github.com:Cerebras/modelzoo-internal.git"
+sourceUrl = "ssh://git@github.com:Cerebras/monolith.git"
+destinationUrl = "ssh://git@github.com:Cerebras/modelzoo-internal.git"
 
 core.workflow(
     name = "default",
